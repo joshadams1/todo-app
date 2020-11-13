@@ -1,12 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 
-import Button from '@material-ui/core/Button';
+import { FormControl, TextField, Button } from '@material-ui/core';
 
 const Login = () => {
     return (
         <div>
-            <h1 className="button">Hello world</h1>
-            <Button className="button">Test</Button>
+            <h1>Login</h1>
+            <FormControl>
+                <TextField></TextField>
+                <TextField></TextField>
+                <Button>Enter</Button>
+            </FormControl>
         </div>
     )
 }
