@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from 'react';
 
+import Button from '@material-ui/core/Button';
+
 const Login = () => {
     return (
         <div>
-            <h1>Hello world</h1>
+            <h1 className="button">Hello world</h1>
+            <Button className="button">Test</Button>
         </div>
     )
 }
