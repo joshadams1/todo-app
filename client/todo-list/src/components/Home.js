@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 import NewItem from './NewItem';
-import AddItem from './AddItem';
+import ListItems from './ListItems';
 
 import { Grid, IconButton } from '@material-ui/core';
 
@@ -11,11 +11,10 @@ const Home = () => {
         <Grid container alignItems="flex-start" direction="column">
             <Grid item>
                 <h1>Welcome</h1>
-                <NewItem />
-                <AddItem />
+                <NewItem setTaskList={setTaskList} taskList={taskList} />
             </Grid>
             <Grid item>
-                {/* Add list item component here */}
+                <ListItems items={taskList} />
             </Grid>
         </Grid>
     )
