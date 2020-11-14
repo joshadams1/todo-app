@@ -14,25 +14,18 @@ const ListItem = () => {
     }
 
     return (
-        <div style={{ "background-color": "white" }}>
-            <Grid container justify="space-between" spacing={5} alignItems="baseline">
-                <h1>{button}</h1>
-                <Grid item>
-                    <TextField
-                        label="Outlined"
-                        required
-                        id="filled-required"
-                        defaultValue="Hello World"
-                        variant="filled"
-                    ></TextField>
-                </Grid>
-                <Grid item>
-                    <IconButton onClick={handleClick}>
-                        {!button ? <UncheckedIcon /> : <CheckedIcon />}
-                    </IconButton>
-                </Grid>
+        <Grid container justify="center" alignItems="baseline">
+            <h1>{button}</h1>
+            <Grid item>
+                <TextField
+                    label="Outlined"
+                    required
+                    id="filled-required"
+                    defaultValue="Write down task"
+                    variant="filled"
+                ></TextField>
             </Grid>
-        </div>
+        </Grid>
     )
 }
 
