@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
 import _ from 'lodash';
 
-import { TextField, Grid, IconButton } from '@material-ui/core';
+import { TextField, Grid, Button, IconButton } from '@material-ui/core';
+import Alert from '@material-ui/lab/Alert';
 
 import AddIcon from '@material-ui/icons/Add';
 
 
 const ListItem = (props) => {
     const [task, setTask] = useState("");
+    const [isRepeat, setRepeat] = useState(false);
     const { taskList, setTaskList } = props;
 
     const handleChange = event => {
@@ -16,21 +18,45 @@ const ListItem = (props) => {
     }
 
     const addToTaskList = () => {
-        // Prevent repeats tasks in task list.
-        let isRepeat = _.includes(taskList, task);
-        if (!isRepeat) {
-            setTaskList(oldArray => [...oldArray, task]);
+        // Check for repeats in task list.
+        let repeat = _.includes(taskList, task);
+        if (repeat) {
+            setRepeat(true)
         } else {
-
+            setTaskList(oldArray => [...oldArray, task]);
         }
+    }
+
+    const addRepeat = () => {
+        setTaskList(oldArray => [...oldArray, task]);
+        setRepeat(false);
     }
 
 
     return (
         <Grid container justify="center" alignItems="baseline">
+
+            {/* Add alert for repeat task if entered */}
+            {isRepeat ?
+                <Grid container justify="center">
+                    <Grid item>
+                        <Alert
+                            action={
+                                <Button color="inherit" size="small" onClick={addRepeat}>
+                                    Add anyway?
+                                </Button>
+                            }
+                            severity="error"
+                        >
+                            This task is already on your list
+                    </Alert>
+                    </Grid>
+                </Grid>
+                : ""}
+
             <Grid item>
                 <TextField
-                    label="Outlined"
+                    label="Task"
                     required
                     id="filled-required"
                     placeholder="Write down task"
@@ -38,8 +64,9 @@ const ListItem = (props) => {
                     onChange={handleChange}
                 ></TextField>
             </Grid>
+
             <Grid container justify="center">
-                <IconButton style={{ "margin-top": "30px", "color": "white" }} onClick={addToTaskList}>
+                <IconButton style={{ "margin-top": "30px", "color": "white" }} id="outlined-basic" onClick={addToTaskList}>
                     <Grid container alignItems="baseline" spacing={2}>
                         <Grid item>
                             <AddIcon />
@@ -50,6 +77,7 @@ const ListItem = (props) => {
                     </Grid>
                 </IconButton>
             </Grid>
+
         </Grid>
     )
 }
