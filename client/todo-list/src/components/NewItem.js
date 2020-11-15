@@ -32,12 +32,10 @@ const ListItem = (props) => {
         setRepeat(false);
     }
 
-
     return (
-        <Grid container justify="center" alignItems="baseline">
-
-            {/* Add alert for repeat task if entered */}
+        <Grid container alignItems="baseline">
             {isRepeat ?
+                // Conditional rendering for repeat task alert.
                 <Grid container justify="center">
                     <Grid item>
                         <Alert
@@ -62,11 +60,16 @@ const ListItem = (props) => {
                     placeholder="Write down task"
                     variant="filled"
                     onChange={handleChange}
+                    defaultValue={task}
                 ></TextField>
             </Grid>
 
-            <Grid container justify="center">
-                <IconButton style={{ "margin-top": "30px", "color": "white" }} id="outlined-basic" onClick={addToTaskList}>
+            <Grid container>
+                <IconButton
+                    style={{ "margin-top": "30px", "color": "white" }}
+                    onClick={addToTaskList}
+                    disabled={task === ""}
+                >
                     <Grid container alignItems="baseline" spacing={2}>
                         <Grid item>
                             <AddIcon />
