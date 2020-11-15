@@ -41,25 +41,24 @@ const NewItem = props => {
     }
 
     return (
-        <Grid container direction="column" justify="center">
-
+        <Grid container direction="column" justify="center" className="new-item-container">
             <Grid item>
                 <TextField
                     label="Task"
                     required
                     id="filled-required"
                     placeholder="Write down task"
-                    variant="filled"
+                    variant="outlined"
                     onChange={handleChange}
                     defaultValue={task}
                 ></TextField>
             </Grid>
-
             <Grid item>
                 <IconButton
-                    style={{ "margin-top": "30px", "color": "white" }}
+                    className=""
                     onClick={addToTaskList}
-                    disabled={task === ""}
+                    disabled={!task.length}
+                    className="add-button"
                 >
                     <Grid container alignItems="baseline" spacing={2}>
                         <Grid item>
@@ -99,7 +98,6 @@ const NewItem = props => {
                     </Collapse>
                 </Grid>
                 : ""}
-
         </Grid>
     )
 }

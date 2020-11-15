@@ -10,7 +10,7 @@ const Home = () => {
 
     return (
         <div>
-            <h1>Welcome</h1>
+            <h1>To-Do List</h1>
             <Grid container alignItems="baseline" justify="space-around" spacing={5}>
                 <Grid item>
                     <NewItem setTaskList={setTaskList} taskList={taskList} />
