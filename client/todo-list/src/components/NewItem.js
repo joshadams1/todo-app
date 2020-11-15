@@ -2,14 +2,17 @@ import React, { useState } from 'react';
 import _ from 'lodash';
 
 import { TextField, Grid, Button, IconButton } from '@material-ui/core';
+import Collapse from '@material-ui/core/Collapse';
 import Alert from '@material-ui/lab/Alert';
 
 import AddIcon from '@material-ui/icons/Add';
+import CloseIcon from '@material-ui/icons/Close';
 
 
-const ListItem = (props) => {
+const NewItem = props => {
     const [task, setTask] = useState("");
     const [isRepeat, setRepeat] = useState(false);
+    const [open, setOpen] = React.useState(true);
     const { taskList, setTaskList } = props;
 
     const handleChange = event => {
@@ -32,25 +35,13 @@ const ListItem = (props) => {
         setRepeat(false);
     }
 
+    const handleClose = () => {
+        setOpen(false);
+        setRepeat(false);
+    }
+
     return (
-        <Grid container alignItems="baseline">
-            {isRepeat ?
-                // Conditional rendering for repeat task alert.
-                <Grid container justify="center">
-                    <Grid item>
-                        <Alert
-                            action={
-                                <Button color="inherit" size="small" onClick={addRepeat}>
-                                    Add anyway?
-                                </Button>
-                            }
-                            severity="error"
-                        >
-                            This task is already on your list
-                    </Alert>
-                    </Grid>
-                </Grid>
-                : ""}
+        <Grid container direction="column" justify="center">
 
             <Grid item>
                 <TextField
@@ -64,7 +55,7 @@ const ListItem = (props) => {
                 ></TextField>
             </Grid>
 
-            <Grid container>
+            <Grid item>
                 <IconButton
                     style={{ "margin-top": "30px", "color": "white" }}
                     onClick={addToTaskList}
@@ -81,8 +72,36 @@ const ListItem = (props) => {
                 </IconButton>
             </Grid>
 
+            {isRepeat ?
+                // Conditional rendering for repeat task alert.
+                <Grid item>
+                    <Collapse in={open}>
+                        <Alert
+                            action={
+                                <div>
+                                    <Button color="inherit" size="small" onClick={addRepeat}>
+                                        Add anyway?
+                                        </Button>
+                                    <IconButton
+                                        aria-label="close"
+                                        color="inherit"
+                                        size="small"
+                                        onClick={handleClose}
+                                    >
+                                        <CloseIcon fontSize="inherit" />
+                                    </IconButton>
+                                </div>
+                            }
+                            severity="error"
+                        >
+                            This task is already on your list
+                            </Alert>
+                    </Collapse>
+                </Grid>
+                : ""}
+
         </Grid>
     )
 }
 
-export default ListItem;
+export default NewItem;
