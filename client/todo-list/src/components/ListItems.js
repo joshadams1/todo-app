@@ -1,18 +1,38 @@
 import React, { useState } from 'react';
 import _ from 'lodash';
 
-import { List, ListItem, IconButton, Tabs, Tab } from '@material-ui/core';
+import { List, ListItem, IconButton, Tabs, Tab, Box, Typography } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
 import CompleteIcon from '@material-ui/icons/Done';
 import PendingIcon from '@material-ui/icons/RadioButtonUnchecked';
 
-// List item component will list out all items + manage if they're done.
-const ListItems = (props) => {
+
+const ListItems = props => {
     const [completedItems, setCompletedItems] = useState([]);
+    const [value, setValue] = useState(0);
     const { items, setTaskList } = props;
+
+    /* 
+       Tab panel component from Material UI documentation. 
+       See "Simple Tabs" section: https://material-ui.com/components/tabs/#tabs
+    */
+    const TabPanel = props => {
+        const { children, value, index } = props;
+
+        return (
+            <div hidden={value !== index}>
+                {value === index && (
+                    <Box p={3}>
+                        <div>{children}</div>
+                    </Box>
+                )}
+            </div>
+        );
+    }
 
     const handleClick = (item, action) => {
         if (action === "delete") {
+            // Sets a new array without the selected item for both pending and completed.
             setTaskList(_.without(items, item));
             setCompletedItems(_.without(completedItems, item));
         } else if (action === "completed") {
@@ -22,31 +42,81 @@ const ListItems = (props) => {
         }
     }
 
+    const handleChange = (event, newValue) => {
+        setValue(newValue);
+    }
+
     return (
         <div>
-            {/* Put tabs component where this h4 is */}
             <h4>Tasks</h4>
-            <List>
-                {items.map(item => {
-                    return (
-                        <div hidden={!_.includes(items, item)}>
-                            <ListItem>
-                                {item}
-                                <IconButton onClick={() => handleClick(item, "delete")}>
-                                    <DeleteIcon />
-                                </IconButton>
-                                {!_.includes(completedItems, item) ?
-                                    <IconButton onClick={() => handleClick(item, "completed")}>
-                                        <PendingIcon />
+            <Tabs value={value} onChange={handleChange}>
+                <Tab label="All Tasks" />
+                <Tab label="Pending" />
+                <Tab label="Completed" />
+            </Tabs>
+            <TabPanel value={value} index={0}>
+                <List>
+                    {items.map(item => {
+                        return (
+                            <div hidden={!_.includes(items, item)}>
+                                <ListItem>
+                                    {item}
+                                    <IconButton onClick={() => handleClick(item, "delete")}>
+                                        <DeleteIcon />
                                     </IconButton>
-                                    : <IconButton onClick={() => handleClick(item)}>
-                                        <CompleteIcon />
-                                    </IconButton>}
-                            </ListItem>
-                        </div>
-                    )
+                                    {!_.includes(completedItems, item) ?
+                                        <IconButton onClick={() => handleClick(item, "completed")}>
+                                            <PendingIcon />
+                                        </IconButton>
+                                        : <IconButton onClick={() => handleClick(item)}>
+                                            <CompleteIcon />
+                                        </IconButton>}
+                                </ListItem>
+                            </div>
+                        )
+                    })}
+                </List>
+            </TabPanel>
+            <TabPanel value={value} index={1}>
+                {items.map(item => {
+                    if (!_.includes(completedItems, item)) {
+                        return (
+                            <div hidden={!_.includes(items, item)}>
+                                <ListItem>
+                                    {item}
+                                    <IconButton onClick={() => handleClick(item, "delete")}>
+                                        <DeleteIcon />
+                                    </IconButton>
+
+                                    {/* Allows for the task to be flipped between pending and completed */}
+                                    {!_.includes(completedItems, item) ?
+                                        <IconButton onClick={() => handleClick(item, "completed")}>
+                                            <PendingIcon />
+                                        </IconButton>
+                                        : <IconButton onClick={() => handleClick(item)}>
+                                            <CompleteIcon />
+                                        </IconButton>}
+                                </ListItem>
+                            </div>
+                        )
+                    }
                 })}
-            </List>
+            </TabPanel>
+            <TabPanel value={value} index={2}>
+                <List>
+                    {completedItems.map(item => {
+                        return (<ListItem>
+                            {item}
+                            <IconButton onClick={() => handleClick(item, "delete")}>
+                                <DeleteIcon />
+                            </IconButton>
+                            <IconButton onClick={() => handleClick(item)}>
+                                <CompleteIcon />
+                            </IconButton>
+                        </ListItem>)
+                    })}
+                </List>
+            </TabPanel>
         </div>
     )
 }
