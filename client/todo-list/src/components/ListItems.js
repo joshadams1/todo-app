@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import _ from 'lodash';
 
 import { List, ListItem, IconButton, Tabs, Tab, Box, Grid } from '@material-ui/core';
-import Modal from '@material-ui/core/Modal';
 import DeleteIcon from '@material-ui/icons/Delete';
 import CompleteIcon from '@material-ui/icons/Done';
 import PendingIcon from '@material-ui/icons/RadioButtonUnchecked';
@@ -53,7 +52,7 @@ const ListItems = props => {
             userPrompt = prompt('You must enter a new value while editing');
         }
 
-        // Pull out original item and replaces it.
+        // Pulls out original item and replaces it.
         if (_.includes(completedItems, task)) {
             strippedCompletedList = _.without(completedItems, task);
             strippedTaskedList = _.without(items, task);
@@ -161,11 +160,11 @@ const ListItems = props => {
                                         <IconButton onClick={() => handleAlert(item)}>
                                             <EditIcon />
                                         </IconButton>
-                                        <IconButton onClick={() => handleClick(item, 'delete')}>
-                                            <DeleteIcon />
-                                        </IconButton>
                                         <IconButton onClick={() => handleClick(item)}>
                                             <CompleteIcon />
+                                        </IconButton>
+                                        <IconButton onClick={() => handleClick(item, 'delete')}>
+                                            <DeleteIcon />
                                         </IconButton>
                                     </ListItem>
                                 )
