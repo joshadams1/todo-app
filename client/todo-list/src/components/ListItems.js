@@ -81,9 +81,9 @@ const ListItems = props => {
                 <Grid container justify="center">
                     <Grid item>
                         <List>
-                            {items.map(item => {
+                            {items.map((item, idx) => {
                                 return (
-                                    <div hidden={!_.includes(items, item)}>
+                                    <div hidden={!_.includes(items, item)} key={idx}>
                                         <ListItem>
                                             {item}
                                             <IconButton onClick={() => handleAlert(item)}>
@@ -117,10 +117,10 @@ const ListItems = props => {
                 <Grid container justify="center">
                     <Grid item>
                         <List>
-                            {items.map(item => {
+                            {items.map((item, idx) => {
                                 if (!_.includes(completedItems, item)) {
                                     return (
-                                        <div hidden={!_.includes(items, item)}>
+                                        <div hidden={!_.includes(items, item)} key={idx}>
                                             <ListItem>
                                                 {item}
                                                 <IconButton onClick={() => handleAlert(item)}>
@@ -154,9 +154,9 @@ const ListItems = props => {
                 <Grid container justify="center">
                     <Grid item>
                         <List>
-                            {completedItems.map(item => {
+                            {completedItems.map((item, idx) => {
                                 return (
-                                    <ListItem>
+                                    <ListItem key={idx}>
                                         {item}
                                         <IconButton onClick={() => handleAlert(item)}>
                                             <EditIcon />
