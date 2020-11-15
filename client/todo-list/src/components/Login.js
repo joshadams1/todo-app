@@ -11,7 +11,8 @@ const Login = () => {
                 <TextField></TextField>
                 <TextField></TextField>
                 <Link to="./home">
-                    <Button color="primary">Enter</Button>
+                    <Button style={{ "margin-top": "20px", "text-decoration": "none" }}
+                        color="primary" variant="contained">Enter</Button>
                 </Link>
             </FormControl>
         </div>
